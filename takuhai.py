@@ -17,14 +17,14 @@ from linebot.models import (
 
 
 lineuserID = ''
-with open('LineAPIuserID') as f:
-    lineuserID = f.readline()
+with open('LineAPIuserID.txt') as f:
+    lineuserID = f.readline().rstrip('\n')
 
-LineAccessToken = ''
-with open('LinechannelAccessToken') as f:
-    lineuserID = f.readline()
+lineAccessToken = ''
+with open('LinechannelAccessToken.txt') as f:
+    lineAccessToken = f.readline().rstrip('\n')
 
-line_bot_api = LineBotApi(LineAccessToken)
+line_bot_api = LineBotApi(lineAccessToken)
 
 
 def init():
@@ -36,6 +36,7 @@ def loop():
         res = ADC0832.getResult() - 80
         if res > 10:
             line_bot_api.push_message(lineuserID, TextSendMessage(text='宅配ボックスが開きました。確認してください。'))
+            print("LINE通知を送信しました")
             time.sleep(60)
         else:
             time.sleep(2)
